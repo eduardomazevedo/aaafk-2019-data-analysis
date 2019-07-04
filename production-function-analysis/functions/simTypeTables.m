@@ -1,0 +1,56 @@
+function overallTypeTables = simTypeTables(directory)
+% This function aggregates tables for calibration exercise of same
+% parameters in one table. The output is struct of aggregated tables of each
+% parameters. 
+
+addpath('aass', 'classes', 'functions','analysis');
+
+warning('off','all')
+addpath(directory)
+spec;
+addpath(directory)
+SS = aassGet(directory);
+I = ~cellfun(@isempty, SS);
+SS(:,sum(I) == 0) = [];
+numofPar = size(SS,2);
+overallTypeTables = cell(numofPar,1);
+for j= 1 : numofPar
+
+for i = 1 : 100
+    SS{i,j}.burn = 0;
+if i==1
+overallTypeTable = table2array(SS{i,j}.typeTable);
+variableNames = SS{i,j}.typeTable.Properties.VariableNames;
+typeVar = find(strcmp(variableNames,'type'));
+countVar = find(strcmp(variableNames,'GroupCount'));
+overallTypeTable = [overallTypeTable(:,[typeVar countVar])...
+    overallTypeTable(:,3:6).*repmat(overallTypeTable(:,countVar),1,4)...
+    overallTypeTable(:,7).*(overallTypeTable(:,countVar).*overallTypeTable(:,5))...
+    overallTypeTable(:,8).*(overallTypeTable(:,countVar).*(1-overallTypeTable(:,5)))...
+    overallTypeTable(:,9).*(overallTypeTable(:,countVar).*overallTypeTable(:,3))...
+    overallTypeTable(:,10).*(overallTypeTable(:,countVar).*(1-overallTypeTable(:,3)))];
+else
+newTable = table2array(SS{i,j}.typeTable);
+
+newTable = [newTable(:,[typeVar countVar])...
+    newTable(:,3:6).*repmat(newTable(:,countVar),1,4)...
+    newTable(:,7).*(newTable(:,countVar).*newTable(:,5))...
+    newTable(:,8).*((newTable(:,countVar).*(1-newTable(:,5))))...
+    newTable(:,9).*(newTable(:,countVar).*newTable(:,3))...
+    newTable(:,10).*((newTable(:,countVar).*(1-newTable(:,3))))];
+overallTypeTable = [overallTypeTable(:,typeVar)...
+    overallTypeTable(:,2:end)+newTable(:,2:end)];
+end
+
+end
+overallTypeTable = [overallTypeTable(:,[typeVar countVar])...
+    overallTypeTable(:,3:6)./repmat(overallTypeTable(:,countVar),1,4)...
+    overallTypeTable(:,7)./(overallTypeTable(:,5))...
+    overallTypeTable(:,8)./(overallTypeTable(:,countVar)-overallTypeTable(:,5))...
+    overallTypeTable(:,9)./(overallTypeTable(:,3))...
+    overallTypeTable(:,10)./(overallTypeTable(:,countVar)-overallTypeTable(:,3))];
+overallTypeTable = array2table(overallTypeTable,...
+    'VariableNames',variableNames);
+
+overallTypeTables{j} = overallTypeTable;
+end

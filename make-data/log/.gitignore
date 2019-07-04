@@ -1,0 +1,4 @@
+# Do not track files here.
+*
+!readme.txt
+!.gitignore

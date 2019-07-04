@@ -1,0 +1,30 @@
+# Temp files
+*.*~
+\#*#
+
+# Directories that are just symbolic links
+datasets
+
+# Output
+*.csv
+*.pdf
+*.eps
+*.tex
+*.dta
+#*.xls
+#*.xlsx
+
+# Log
+*.log
+
+# Annoying
+.DS_Store
+.Statahistory
+._.DS_Store
+.Rhistory
+
+# something from the merge that I think should be ignored (CF)
+# Link to datasets
+#datasets
+#!*/datasets
+

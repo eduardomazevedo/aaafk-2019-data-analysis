@@ -1,0 +1,36 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+
+# Data
+*.csv
+*.mat
+
+# Backup files
+*.*~
+\#*.*#
+
+# Python compiled
+*.pyc
+
+# Logs
+*.sh.e*
+*.sh.o*
+*.Rhistory
+
+# Dropbox
+.dropbox.attr
+.dropbox
+
+# Asset files
+*.eps
+*.pdf
+*.jpeg
+*.txt
+
+
+# Table output
+*.tex
+
+# Spreadsheets
+# Note: to commit changes to a spreadsheet use git add -f foo.xls
+*.xls
+*.xlsx

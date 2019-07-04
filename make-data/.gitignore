@@ -1,0 +1,38 @@
+# OSx stuff #
+#############
+._*
+.DS_Store
+
+# Emacs backups #
+#################
+*.*~
+\#*#
+*.#*
+
+# Logs #
+########
+*.log
+nohup.out
+.Statahistory
+.statahistory
+
+# Data #
+########
+*.csv
+*.dta
+*.DTA
+*.tex
+
+# Python Compiled Files #
+#########################
+*.pyc
+
+# LaTeX Output #
+################
+*.tex
+
+# Directories that are just Symbolic links
+##########################################
+intermediate-data
+datasets
+
